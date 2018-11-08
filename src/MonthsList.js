@@ -27,7 +27,6 @@ class MonthsList extends Component {
         'Content-Type': 'application/json'
       }
     }).then(() => {
-      console.log("--------------------------------");
       let updatedMonths = [...this.state.months].filter(i => i.id !== id);
       this.setState({months: updatedMonths});
     });
