@@ -3,10 +3,11 @@ import { Link, withRouter } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import AppNavbar from './AppNavbar';
 
-class MonthEdit extends Component {
+class ExpenseEdit extends Component {
 
   emptyItem = {
-    name: ''
+    description: '',
+    amount: ''
   };
 
   constructor(props) {
@@ -20,8 +21,8 @@ class MonthEdit extends Component {
 
   async componentDidMount() {
     if (this.props.match.params.id !== 'new') {
-      const month = await (await fetch(`/months/month/${this.props.match.params.id}`)).json();
-      this.setState({item: month});
+      const expense = await (await fetch(`/expenses/expense/${this.props.match.params.id}`)).json();
+      this.setState({item: expense});
     }
   }
 
@@ -38,7 +39,7 @@ class MonthEdit extends Component {
     event.preventDefault();
     const {item} = this.state;
 
-    await fetch((item.id) ? '/months/month/' + (item.id) : '/months/month', {
+    await fetch((item.id) ? '/expenses/expense/' + (item.id) : '/expenses/expense', {
       method: (item.id) ? 'PUT' : 'POST',
       headers: {
         'Accept': 'application/json',
@@ -46,12 +47,12 @@ class MonthEdit extends Component {
       },
       body: JSON.stringify(item),
     });
-    this.props.history.push('/months');
+    this.props.history.push('/expenses');
   }
 
   render() {
     const {item} = this.state;
-    const title = <h2>{item.id ? 'Edit Month' : 'Add Month'}</h2>;
+    const title = <h2>{item.id ? 'Edit Expense' : 'Add Expense'}</h2>;
 
     return <div>
       <AppNavbar/>
@@ -59,9 +60,12 @@ class MonthEdit extends Component {
         {title}
         <Form onSubmit={this.handleSubmit}>
           <FormGroup>
-            <Label for="name">Name</Label>
-            <Input type="text" name="name" id="name" value={item.name || ''}
-                   onChange={this.handleChange} autoComplete="name"/>
+            <Label for="description">Description</Label>
+                <Input type="text" name="description" id="description" value={item.description || ''}
+                    onChange={this.handleChange} autoComplete="description"/>
+            <Label for="amount">Amount</Label>
+                <Input type="text" name="amount" id="amount" value={item.amount || ''}
+                    onChange={this.handleChange} autoComplete="amount"/>
           </FormGroup>
           <FormGroup>
             <Button color="primary" type="submit">Save</Button>{' '}
@@ -73,4 +77,4 @@ class MonthEdit extends Component {
   }
 }
 
-export default withRouter(MonthEdit);
+export default withRouter(ExpenseEdit);
