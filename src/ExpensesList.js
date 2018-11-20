@@ -42,12 +42,14 @@ class ExpensesList extends Component {
     const expensesList = expenses.map(expense => {
       const description = `${expense.description || ''}`;
       const amount = `${expense.amount || ''}`;
-      const month = `${expense.month.name || ''}`;
+      const month = `${expense.month || ''}`;
+      const year = `${expense.year || ''}`;
       return <tr key={expense.id}>
         <td style={{whiteSpace: 'nowrap'}}>{expense.id}</td>
         <td>{description}</td>
         <td>{amount}</td>
         <td>{month}</td>
+        <td>{year}</td>
         <td>
           <ButtonGroup>
             <Button size="sm" color="primary" tag={Link} to={"/expenses/" + expense.id}>Edit</Button>
@@ -69,9 +71,10 @@ class ExpensesList extends Component {
             <thead>
             <tr>
               <th width="10%">Id</th>
-              <th width="30%">description</th>
-              <th width="10%">Amount</th>
-              <th width="30%">Month</th>
+              <th width="20%">description</th>
+              <th width="20%">Amount</th>
+              <th width="20%">Month</th>
+              <th width="10%">Year</th>
               <th width="20%">Actions</th>
             </tr>
             </thead>
